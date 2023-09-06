@@ -1,0 +1,17 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+:root {
+  --black: #000;
+  --white: #fff;
+  --gray: #8E8E8E;
+  --serif: 'Libre Baskerville', serif;
+}
