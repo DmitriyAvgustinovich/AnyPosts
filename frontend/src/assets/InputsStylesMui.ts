@@ -1,4 +1,4 @@
-export const authInput = {
+export const input = {
   width: '100%',
   marginBottom: '20px',
   '& .MuiOutlinedInput-root': {

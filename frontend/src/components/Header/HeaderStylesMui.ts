@@ -8,6 +8,11 @@ export const headerWrapper = {
   padding: '10px',
 };
 
+export const headerIcons = {
+  color: 'var(--black)',
+  fontSize: '46px',
+};
+
 export const headerDesktopLogoIcon = {
   display: { xs: 'none', md: 'flex' },
   mr: 2,

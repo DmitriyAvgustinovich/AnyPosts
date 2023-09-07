@@ -10,8 +10,8 @@ import {
   loginText,
   loginInputsWrapper,
   loginSignText,
-} from './loginStylesMui';
-import { authInput } from '../../assets/AuthInputsStylesMui';
+} from './LoginStylesMui';
+import { input } from '../../assets/InputsStylesMui';
 import { primaryBtn } from '../../assets/ButtonStylesMui';
 import { useNavigate } from 'react-router-dom';
 
@@ -41,7 +41,7 @@ export const Login: React.FC = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box sx={loginInputsWrapper}>
             <TextField
-              sx={authInput}
+              sx={input}
               id='outlined-basic'
               label='Name'
               variant='outlined'
@@ -51,7 +51,7 @@ export const Login: React.FC = () => {
             />
 
             <TextField
-              sx={authInput}
+              sx={input}
               type='password'
               id='outlined-basic'
               label='Password'

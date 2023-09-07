@@ -9,9 +9,9 @@ import {
   registerText,
   registerInputsWrapper,
   registerSignText,
-} from './registerStylesMui';
+} from './RegisterStylesMui';
 import { h1, primaryText, signature } from '../../globalsStylesMui';
-import { authInput } from '../../assets/AuthInputsStylesMui';
+import { input } from '../../assets/InputsStylesMui';
 import { primaryBtn } from '../../assets/ButtonStylesMui';
 import { useNavigate } from 'react-router-dom';
 
@@ -41,7 +41,7 @@ export const Register: React.FC = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box sx={registerInputsWrapper}>
             <TextField
-              sx={authInput}
+              sx={input}
               id='outlined-basic'
               label='Name'
               variant='outlined'
@@ -51,7 +51,7 @@ export const Register: React.FC = () => {
             />
 
             <TextField
-              sx={authInput}
+              sx={input}
               type='password'
               id='outlined-basic'
               label='Password'

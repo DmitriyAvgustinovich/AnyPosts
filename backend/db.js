@@ -15,8 +15,7 @@ const User = sequlize.define('user', {
     },
     username: {
         type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
+        allowNull: false
     },
     password: {
         type: DataTypes.STRING,
@@ -28,7 +27,8 @@ const User = sequlize.define('user', {
     },
     posts: {
         type: DataTypes.ARRAY(DataTypes.JSONB),
-        allowNull: true
+        allowNull: true,
+        defaultValue: []
     }
 })
 
@@ -39,26 +39,30 @@ const Post = sequlize.define('post', {
         primaryKey: true,
         allowNull: false
     },
-    image: {
+    // image: {
+    //     type: DataTypes.STRING,
+    //     allowNull: true
+    // },
+    // author: {
+    //     type: DataTypes.STRING,
+    //     allowNull: false
+    // },
+    // readingTime: {
+    //     type: DataTypes.INTEGER,
+    //     allowNull: false
+    // },
+    // tags: {
+    //     type: DataTypes.ARRAY(DataTypes.STRING),
+    //     allowNull: false
+    // },
+    title: {
         type: DataTypes.STRING,
-        allowNull: true
-    },
-    author: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    readingTime: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
-    tags: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: false
     },
     text: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false
-    }
+    },
 });
 
 module.exports = {

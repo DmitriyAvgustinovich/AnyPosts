@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import {
   headerBarWrapper,
   headerWrapper,
+  headerIcons,
   headerDesktopLogoIcon,
   headerMobLogoIcon,
   headerUsername,
@@ -19,6 +20,8 @@ import {
 import { navLink } from '../../globalsStylesMui';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectAuth, setLogout } from '../../redux/slices/authSlice';
+import { useGetUser } from '../../hooks/useGetUser';
+import { useSetAuthUser } from '../../hooks/useSetAuthUser';
 
 export const Header: React.FC = () => {
   const navigate = useNavigate();
@@ -26,8 +29,8 @@ export const Header: React.FC = () => {
   const dispatch = useDispatch();
 
   const { isAuth } = useSelector(selectAuth);
-  const userObj = localStorage.getItem('user');
-  const user = userObj ? JSON.parse(userObj) : null;
+  const user = useGetUser();
+  useSetAuthUser(user);
 
   const pages = [
     {
@@ -62,7 +65,7 @@ export const Header: React.FC = () => {
               onClick={(e) => setAnchorElNav(e.currentTarget)}
               color='inherit'
             >
-              <MenuIcon sx={{ color: 'var(--black)' }} />
+              <MenuIcon sx={headerIcons} />
             </IconButton>
 
             <Menu
@@ -124,7 +127,7 @@ export const Header: React.FC = () => {
             >
               <MenuItem>
                 <Box sx={headerMenuItemBlock}>
-                  <Typography sx={[headerUsername, navLink]}>{isAuth ? user?.username : 'User Name'}</Typography>
+                  <Typography sx={[headerUsername, navLink]}>{isAuth ? user.username : 'User Name'}</Typography>
                 </Box>
               </MenuItem>
 

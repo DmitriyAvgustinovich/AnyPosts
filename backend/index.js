@@ -1,7 +1,7 @@
 const bodyParser = require('body-parser');
 const express = require('express');
 const cors = require('cors');
-const { User, sequlize } = require('./db');
+const { User, sequlize, Post } = require('./db');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
@@ -46,7 +46,6 @@ app.post('/registration', async (req, res) => {
     try {
         const { username, password } = req.body;
         // const { img } = req.files;
-        console.log(username, password)
         const user = await User.findOne({ where: { username } });
 
         if (!user) {
@@ -74,7 +73,6 @@ app.post('/login', async (req, res) => {
 
     if (username && password) {
         const user = await User.findOne({ where: { username } })
-        console.log(user.password)
 
         if (user) {
             let check_pass = bcrypt.compareSync(password, user.password)
@@ -95,26 +93,66 @@ app.post('/refreshJWT', async (req, res) => {
     const { token } = req.body;
 
     try {
-        if (!token) {
-            return res.send('Ноу токен провайдер')
-        }
+        if (!token) return res.send('Ноу токен провайдер')
 
         const expiresIn = '60d';
-        console.log(secret_key_jwt)
 
         const user = jwt.verify(token, secret_key_jwt);
         const user1 = await User.findOne({ where: { username: user.username } });
 
-        // Generate a new token with a new expiration time
-        const newToken = jwt.sign({ id: user.id, username: user.username, role: user.role }, secret_key_jwt, { expiresIn: expiresIn, });
+        const newToken = jwt.sign({
+            id: user.id, username: user.username, role: user.role
+        },
+            secret_key_jwt, {
+            expiresIn: expiresIn,
+        });
 
-        // Return the new token and the user
         return res.json({ token: newToken, user: user1 });
     } catch (err) {
         console.error(err);
         return res.send('Ошибка шо таке')
     }
 })
+
+const decodeToken = (token) => {
+    const clearToken = token.split(' ')[1]
+
+    jwt.verify(clearToken, secret_key_jwt, (err, decoded) => {
+        err ? ('Ошибка верификации токена:', err) : decoded
+    });
+}
+
+const verifyToken = (req, res, next) => {
+    const token = req.headers.authorization;
+    if (!token) return res.status(401).json({ error: 'Требуется авторизация.' });
+
+    jwt.verify(token.split(' ')[1], secret_key_jwt, (err, user) => {
+        if (err) return res.status(403).json({ error: 'Недействительный токен.' });
+
+        req.user = user;
+        next();
+    });
+};
+
+app.post('/addPost', verifyToken, async (req, res) => {
+    try {
+        if (!req.user) return res.status(401).json({ error: 'Пользователь не авторизован.' });
+
+        decodeToken(req.headers.authorization)
+        const findUser = await User.findOne({ where: { id: req.user.id } })
+
+        const { title, text } = req.body;
+        const newPost = await Post.create({ title, text });
+
+        findUser.posts.push(newPost);
+        await findUser.save();
+
+        return res.status(201).json({ message: 'Пост успешно создан.', post: newPost });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: 'Ошибка сервера: ' + err.message });
+    }
+});
 
 const start = async () => {
     await sequlize.authenticate();
