@@ -1,3 +1,3 @@
 export interface IBurgerMenu {
-  open: boolean
+  open: boolean;
 }

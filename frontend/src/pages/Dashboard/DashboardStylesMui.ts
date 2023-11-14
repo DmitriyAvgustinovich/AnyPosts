@@ -1,32 +1,5 @@
-export const dashboardWrapper = {
-  display: 'flex',
-  maxWidth: '81%',
-};
-
-export const dashboardSidebar = {
-  backgroundColor: 'var(--dark-gray)',
-  height: '100vh',
-  padding: '40px',
-};
-
-export const dashboardLogoIcon = {
-  width: '158px',
-};
-
-export const dashboardPagesBlock = {
-  marginTop: '60px'
-};
-
-export const dashboardPagesItem = {
-  display: 'flex',
-  alignItems: 'center',
-  gap: '10px',
-  marginTop: '20px',
-};
-
-export const dashboardPagesIcon = {
-  fontSize: '30px',
-  color: 'var(--white)',
+export const dashboardText = {
+  color: 'var(--black)',
 };
 
 export const dashboardMenuWrapper = {

@@ -24,11 +24,6 @@ const User = sequlize.define('user', {
     role: {
         type: DataTypes.ENUM('USER', 'ADMIN'),
         defaultValue: 'USER'
-    },
-    posts: {
-        type: DataTypes.ARRAY(DataTypes.JSONB),
-        allowNull: true,
-        defaultValue: []
     }
 })
 
@@ -39,22 +34,10 @@ const Post = sequlize.define('post', {
         primaryKey: true,
         allowNull: false
     },
-    // image: {
-    //     type: DataTypes.STRING,
-    //     allowNull: true
-    // },
-    // author: {
-    //     type: DataTypes.STRING,
-    //     allowNull: false
-    // },
-    // readingTime: {
-    //     type: DataTypes.INTEGER,
-    //     allowNull: false
-    // },
-    // tags: {
-    //     type: DataTypes.ARRAY(DataTypes.STRING),
-    //     allowNull: false
-    // },
+    author: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     title: {
         type: DataTypes.STRING,
         allowNull: false
@@ -63,7 +46,19 @@ const Post = sequlize.define('post', {
         type: DataTypes.TEXT,
         allowNull: false
     },
+    tags: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
+        allowNull: false,
+        defaultValue: []
+    },
+    postImage: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
 });
+
+User.hasMany(Post, { foreignKey: 'userId' });
+Post.belongsTo(User, { foreignKey: 'userId' });
 
 module.exports = {
     User,

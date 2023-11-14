@@ -14,5 +14,7 @@ body {
   --white: #fff;
   --gray: #8E8E8E;
   --dark-gray: #3B3F44;
+  --light-gray: #FAFAFA;
+  --light-slate: #545A61;
   --serif: 'Libre Baskerville', serif;
 }
